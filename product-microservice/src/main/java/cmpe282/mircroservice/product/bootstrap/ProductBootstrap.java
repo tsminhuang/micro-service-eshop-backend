@@ -26,13 +26,13 @@ public class ProductBootstrap implements ApplicationListener<ContextRefreshedEve
     private void loadProducts() {
 
         Product product = buildProduct("A Book", "Book Description", "Book",
-                                        10.0, 100);
+            10.0, 100);
         productRepository.save(product);
 
     }
 
     private static Product buildProduct(String name, String description, String category,
-                                        Double price, Integer invetory) {
+        Double price, Integer invetory) {
         return new Product(ObjectId.get(), name, description, category, price, invetory);
     }
 }
