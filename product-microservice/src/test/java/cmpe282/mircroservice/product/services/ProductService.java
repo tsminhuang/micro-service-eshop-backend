@@ -7,5 +7,7 @@ public interface ProductService {
 
     List<Product> listAll();
 
+    List<Product> search(String pattern);
+
     Product saveOrUpdate(Product product);
 }

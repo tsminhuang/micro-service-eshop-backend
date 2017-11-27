@@ -27,4 +27,10 @@ public class ProductServiceImpl implements ProductService {
     public Product saveOrUpdate(Product product) {
         return repo.save(product);
     }
+
+    @Override
+    public List<Product> search(String pattern) {
+        // TODO: serach service
+        return null;
+    }
 }
