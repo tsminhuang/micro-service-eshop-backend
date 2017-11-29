@@ -6,16 +6,16 @@ import java.util.Set;
 
 public interface ProductService {
 
-    Product addProduct(Product product);
+    Product createNewProduct(Product product);
 
     void deleteProductWithId(String id);
 
-    Product findProductById(String Id);
+    Product getProductById(String id);
 
     List<Product> findAllProducts();
 
     Set<Product> search(String pattern);
 
-    boolean orderProductById(String productId, int unit);
+    boolean orderProductById(String id, int unit);
 
 }

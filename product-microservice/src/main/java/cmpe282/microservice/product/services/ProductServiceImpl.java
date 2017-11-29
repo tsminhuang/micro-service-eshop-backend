@@ -22,7 +22,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product addProduct(Product product) {
+    public Product createNewProduct(Product product) {
         return productRepository.save(product);
     }
 
@@ -32,12 +32,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findProductById(String id) {
+    public Product getProductById(String id) {
         Optional<Product> product = productRepository.findById(id);
-
         if (!product.isPresent()) {
-            log.debug("Not found");
-            return null;
+            throw new ResourceNotFoundException("Product id: " + id + " not found");
         }
 
         return product.get();
@@ -56,15 +54,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean orderProductById(String productId, int orderUnit) {
-        Optional<Product> product = productRepository.findById(productId);
+    public boolean orderProductById(String id, int orderUnit) {
 
-        if (!product.isPresent()) {
-            log.debug("Not found");
-            return false;
-        }
-
-        Product orderProduct = product.get();
+        Product orderProduct = getProductById(id);
         int stocks = orderProduct.getStocks();
         if (stocks < orderUnit) {
             return false;

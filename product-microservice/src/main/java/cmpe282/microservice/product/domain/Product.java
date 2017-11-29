@@ -19,7 +19,6 @@ public class Product {
     private String category;
     private Double price;
     private Integer stocks;
-    private String email;
 
     public Product(String name, String description, String category,
         Double price, Integer stocks) {
