@@ -4,7 +4,7 @@ import cmpe282.microservice.review.domain.Review;
 
 public interface ReviewService {
 
-    Review add(Review review);
+    Review createNewReview(Review review);
 
     double getProductAvgRatingByProductId(String productId);
 

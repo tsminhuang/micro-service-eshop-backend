@@ -22,7 +22,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public Review add(Review review) {
+    public Review createNewReview(Review review) {
         return reviewRepository.save(review);
     }
 }

@@ -41,7 +41,7 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
-    @GetMapping("/search/{keyword}")
+    @GetMapping({"/search/{keyword}"})
     @ResponseStatus(HttpStatus.OK)
     public Set<Product> search(@PathVariable String keyword) {
         return productService.search(keyword);
