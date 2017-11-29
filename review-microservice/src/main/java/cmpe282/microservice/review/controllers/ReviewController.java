@@ -2,8 +2,8 @@ package cmpe282.microservice.review.controllers;
 
 import cmpe282.microservice.review.domain.Review;
 import cmpe282.microservice.review.services.ReviewService;
-import java.awt.PageAttributes.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +18,7 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
+    @PostMapping
     @RequestMapping(method = RequestMethod.POST)
     public Review addReview(@RequestBody Review review) {
         return reviewService.add(review);
