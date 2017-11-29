@@ -1,9 +1,8 @@
-package cmpe282.mircroservice.product.domain;
+package cmpe282.microservice.product.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,11 +13,19 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Product {
 
     @Id
-    private ObjectId Id;
+    private String id;
     private String name;
     private String description;
     private String category;
     private Double price;
     private Integer inventory;
 
+    public Product(String name, String description, String category,
+        Double price, Integer inventory) {
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.price = price;
+        this.inventory = inventory;
+    }
 }

@@ -12,7 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 @Document(collection = "review")
 public class Review {
-
     @Id
     private ObjectId id;
     private ObjectId customerId;
