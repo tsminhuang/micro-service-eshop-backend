@@ -5,12 +5,10 @@ import cmpe282.microservice.product.services.ProductService;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -24,38 +22,34 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
-    Product create(@RequestBody Product entry) {
-        // TODO: Create Product
-        return null;
+    @RequestMapping(method = RequestMethod.POST)
+    public Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
     }
 
-    @RequestMapping(value = "/delete/{Id}", method = RequestMethod.DELETE)
-    Product delete(@PathVariable String Id) {
-        // TODO: Delete Product
-        return null;
+    @RequestMapping(value = "/{Id}", method = RequestMethod.DELETE)
+    public void deleteProductWithId(@PathVariable String Id) {
+        productService.deleteProductWithId(Id);
     }
 
-    @RequestMapping(value = "/update/{Id}", method = RequestMethod.PUT)
-    public Product update(@RequestBody Product entry) {
-        // TODO: update product
-        return null;
+    @RequestMapping(value = "/{Id}", method = RequestMethod.GET)
+    public Product findProductById(@PathVariable String Id) {
+        return productService.findProductById(Id);
     }
 
-    @RequestMapping(value = "/list/{Id}", method = RequestMethod.GET)
-    public Product findById(@PathVariable String Id) {
-        return productService.findById(Id);
-    }
-
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<Product> findAll() {
-        return productService.findAll();
+        return productService.findAllProducts();
     }
 
     @RequestMapping(value = "/search/{keyword}", method = RequestMethod.GET)
     public Set<Product> search(@PathVariable String keyword) {
         return productService.search(keyword);
+    }
+
+    @RequestMapping(value = "/order/{productId}/{unit}", method = RequestMethod.PUT)
+    public boolean orderProductById(@PathVariable String productId, @PathVariable int unit) {
+        return productService.orderProductById(productId, unit);
     }
 
 }

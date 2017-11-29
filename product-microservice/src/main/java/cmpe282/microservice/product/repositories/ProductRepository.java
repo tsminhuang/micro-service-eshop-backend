@@ -12,4 +12,5 @@ public interface ProductRepository extends MongoRepository<Product, String> {
     default List<Product> findByKeyword(String keyword) {
         return findByNameLikeOrCategoryLikeOrDescriptionLikeAllIgnoreCase(keyword, keyword, keyword);
     }
+
 }

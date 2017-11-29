@@ -1,4 +1,4 @@
-package cmpe282.mircoservice;
+package cmpe282.microservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

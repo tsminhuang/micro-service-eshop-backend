@@ -18,14 +18,15 @@ public class Product {
     private String description;
     private String category;
     private Double price;
-    private Integer inventory;
+    private Integer stocks;
+    private String email;
 
     public Product(String name, String description, String category,
-        Double price, Integer inventory) {
+        Double price, Integer stocks) {
         this.name = name;
         this.description = description;
         this.category = category;
         this.price = price;
-        this.inventory = inventory;
+        this.stocks = stocks;
     }
 }

@@ -22,31 +22,58 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAll() {
-        return productRepository.findAll();
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
     }
 
     @Override
-    public Product saveOrUpdate(Product product) {
-        return productRepository.save(product);
+    public void deleteProductWithId(String id) {
+        productRepository.deleteById(id);
+    }
+
+    @Override
+    public Product findProductById(String id) {
+        Optional<Product> product = productRepository.findById(id);
+
+        if (!product.isPresent()) {
+            log.debug("Not found");
+            return null;
+        }
+
+        return product.get();
+    }
+
+    @Override
+    public List<Product> findAllProducts() {
+        return productRepository.findAll();
     }
 
     @Override
     public Set<Product> search(String keyword) {
         List<Product> products = productRepository.findByKeyword(keyword);
-        Set<Product> set = new HashSet<>(products);
-        return set;
+
+        return new HashSet<>(products);
     }
 
     @Override
-    public Product findById(String Id) {
-        Optional<Product> products = productRepository.findById(Id);
+    public boolean orderProductById(String productId, int orderUnit) {
+        Optional<Product> product = productRepository.findById(productId);
 
-        if (!products.isPresent()) {
+        if (!product.isPresent()) {
             log.debug("Not found");
-            return null;
+            return false;
         }
 
-        return products.get();
+        Product orderProduct = product.get();
+        int stocks = orderProduct.getStocks();
+        if (stocks < orderUnit) {
+            return false;
+        }
+        orderProduct.setStocks(stocks - orderUnit);
+        productRepository.save(orderProduct);
+
+        return true;
     }
+
+
 }
