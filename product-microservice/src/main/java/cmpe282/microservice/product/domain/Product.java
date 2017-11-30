@@ -21,7 +21,7 @@ public class Product {
     private Integer stocks;
 
     public Product(String name, String description, String category,
-        Double price, Integer stocks) {
+                   Double price, Integer stocks) {
         this.name = name;
         this.description = description;
         this.category = category;

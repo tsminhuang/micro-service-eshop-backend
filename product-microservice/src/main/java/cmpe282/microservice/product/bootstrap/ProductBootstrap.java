@@ -25,18 +25,18 @@ public class ProductBootstrap implements ApplicationListener<ContextRefreshedEve
     private void loadProducts() {
         productRepository.deleteAll();
         buildProduct("A Book1", "Book Description", "Book",
-            20.0, 10);
+                20.0, 10);
         buildProduct("A Book2", "Book Description", "Book",
-            6941.0, 99);
+                6941.0, 99);
         buildProduct("A Disc", "Disc Description", "Disc",
-            20.0, 10);
+                20.0, 10);
         buildProduct("A PC", "PC Description", "PC",
-            6941.0, 99);
+                6941.0, 99);
 
     }
 
     private void buildProduct(String name, String description, String category,
-        Double price, Integer inventory) {
+                              Double price, Integer inventory) {
         final Product product = new Product(name, description, category, price, inventory);
         productRepository.save(product);
     }
