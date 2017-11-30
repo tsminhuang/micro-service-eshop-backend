@@ -2,10 +2,8 @@ package cmpe282.microservice.customer.services;
 
 import cmpe282.microservice.customer.domain.Customer;
 import cmpe282.microservice.customer.repositories.CustomerRepository;
-import org.springframework.stereotype.Service;
-
-import javax.validation.constraints.NotNull;
 import java.util.Optional;
+import org.springframework.stereotype.Service;
 
 
 @Service
@@ -13,20 +11,22 @@ public class CustomerServiceImpl implements CustomerService {
 
     private CustomerRepository customerRepository;
 
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+    private RabbitMQSender rabbitMQSender;
 
+    public CustomerServiceImpl(CustomerRepository customerRepository, RabbitMQSender rabbitMQSender) {
+        this.customerRepository = customerRepository;
+        this.rabbitMQSender = rabbitMQSender;
+    }
 
     @Override
     public Customer createNewCustomer(Customer customer) {
         Optional<Customer> dbResult = customerRepository.findByEmail(customer.getEmail());
-        if(dbResult.isPresent()) {
-           return null;
+        if (dbResult.isPresent()) {
+            return null;
         }
-
-        // TODO: Call send email message
-        return customerRepository.save(customer);
+        Customer newCustomer = customerRepository.save(customer);
+        rabbitMQSender.sendNewCustomerNotify(customer);
+        return newCustomer;
     }
 
 

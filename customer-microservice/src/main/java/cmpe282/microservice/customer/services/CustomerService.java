@@ -7,6 +7,4 @@ public interface CustomerService {
     boolean authenticateCustomer(Customer customer);
 
     Customer createNewCustomer(Customer customer);
-
-
 }
