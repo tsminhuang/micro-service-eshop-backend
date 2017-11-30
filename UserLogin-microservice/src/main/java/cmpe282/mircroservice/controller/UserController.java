@@ -24,6 +24,13 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
+    public ResponseEntity<HttpStatus> authenticateUser (@RequestBody User user){
+        if(userservice.authenticateUser(user))
+            return new ResponseEntity<HttpStatus>(HttpStatus.OK);
+        else
+            return new ResponseEntity<HttpStatus>(HttpStatus.UNAUTHORIZED);
+    }
 
 
 
