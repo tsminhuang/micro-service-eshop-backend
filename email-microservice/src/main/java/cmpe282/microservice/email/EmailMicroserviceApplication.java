@@ -1,5 +1,6 @@
 package cmpe282.microservice.email;
 
+import cmpe282.microservice.email.services.EmailService;
 import cmpe282.microservice.email.services.RabbitMQReceiver;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -22,12 +23,13 @@ public class EmailMicroserviceApplication {
     }
 
     @Bean
-    public SimpleMessageListenerContainer listenerContainer(ConnectionFactory connectionFactory) {
+    public SimpleMessageListenerContainer listenerContainer(ConnectionFactory connectionFactory,
+        EmailService emailService) {
         SimpleMessageListenerContainer listenerContainer = new SimpleMessageListenerContainer();
         listenerContainer.setConnectionFactory(connectionFactory);
         listenerContainer.setQueueNames(queueName);
         listenerContainer.setMessageConverter(jsonMessageConverter());
-        listenerContainer.setMessageListener(new RabbitMQReceiver());
+        listenerContainer.setMessageListener(new RabbitMQReceiver(emailService));
         //listenerContainer.setAcknowledgeMode(AcknowledgeMode.AUTO);
         return listenerContainer;
     }
