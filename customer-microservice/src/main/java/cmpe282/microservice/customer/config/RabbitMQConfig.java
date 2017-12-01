@@ -20,10 +20,10 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Value("${customer.rabbitmq.queue}")
-    String queueName;
+    private String queueName;
 
     @Value("${customer.rabbitmq.exchange}")
-    String exchange;
+    private String exchange;
 
     @Value("${customer.rabbitmq.routingkey}")
     private String routingkey;
