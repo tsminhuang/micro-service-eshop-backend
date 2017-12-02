@@ -2,6 +2,7 @@ package cmpe282.microservice.customer.services;
 
 import cmpe282.microservice.customer.domain.Customer;
 import cmpe282.microservice.customer.repositories.CustomerRepository;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,11 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    public List<Customer> findAllCustomers() {
+        return customerRepository.findAll();
+    }
+
+    @Override
     public Customer createNewCustomer(Customer customer) {
         Optional<Customer> dbResult = customerRepository.findByEmail(customer.getEmail());
         if (dbResult.isPresent()) {
@@ -28,7 +34,6 @@ public class CustomerServiceImpl implements CustomerService {
         rabbitMQSender.sendNewCustomerNotify(customer);
         return newCustomer;
     }
-
 
     @Override
     public boolean authenticateCustomer(Customer customer) {
