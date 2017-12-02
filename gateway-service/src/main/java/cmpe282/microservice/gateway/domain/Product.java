@@ -12,6 +12,6 @@ public class Product {
     private String id;
     private String name;
     private String description;
-    private String cateory;
+    private String category;
     private Integer stocks;
 }

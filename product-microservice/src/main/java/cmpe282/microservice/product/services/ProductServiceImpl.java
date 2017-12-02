@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Set<Product> search(String keyword) {
+    public Set<Product> getProductByKeyword(String keyword) {
         List<Product> products = productRepository.findByKeyword(keyword);
 
         return new HashSet<>(products);

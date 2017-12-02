@@ -14,7 +14,7 @@ public interface ProductService {
 
     List<Product> findAllProducts();
 
-    Set<Product> search(String pattern);
+    Set<Product> getProductByKeyword(String pattern);
 
     boolean orderProductById(String id, int unit);
 

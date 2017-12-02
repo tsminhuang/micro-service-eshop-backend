@@ -43,8 +43,8 @@ public class ProductController {
 
     @GetMapping({"/search/{keyword}"})
     @ResponseStatus(HttpStatus.OK)
-    public Set<Product> search(@PathVariable String keyword) {
-        return productService.search(keyword);
+    public Set<Product> getProductByKeyword(@PathVariable String keyword) {
+        return productService.getProductByKeyword(keyword);
     }
 
     @PostMapping
