@@ -12,10 +12,10 @@ public class GatewayConfig {
 
     @Value("${rest.api.product}")
     private String PRODUCT_URL;
-//    @Value("${services.url.customer}")
-//    private String CUSTOMER_URL;
-//    @Value("${services.url.review}")
-//    private String REIVEW_URL;
+    @Value("${rest.api.customer}")
+    private String CUSTOMER_URL;
+    @Value("${rest.api.review}")
+    private String REVIEW_URL;
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {

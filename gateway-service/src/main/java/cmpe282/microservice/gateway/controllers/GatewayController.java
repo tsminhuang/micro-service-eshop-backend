@@ -2,6 +2,7 @@ package cmpe282.microservice.gateway.controllers;
 
 import cmpe282.microservice.gateway.domain.Customer;
 import cmpe282.microservice.gateway.domain.Product;
+import cmpe282.microservice.gateway.domain.Review;
 import cmpe282.microservice.gateway.services.GatewayService;
 import java.util.List;
 import java.util.Set;
@@ -41,18 +42,20 @@ public class GatewayController {
     }
 
     @GetMapping("/product/search/{keyword}")
+    @ResponseStatus(HttpStatus.OK)
     public Set<Product> searchProductByKeyword(@PathVariable String keyword) {
         return gatewayService.getProductByKeyword(keyword);
     }
 
     // Customer service route
     @GetMapping("/customer")
+    @ResponseStatus(HttpStatus.OK)
     public List<Customer> getListOfCustomers() {
         return gatewayService.findAllCustomers();
     }
 
     @PostMapping("/customer")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public Customer createNewCustomer(@RequestBody Customer customer) {
         return gatewayService.createNewCustomer(customer);
     }
@@ -60,6 +63,25 @@ public class GatewayController {
     @PostMapping("/customer/auth")
     public ResponseEntity<HttpStatus> authenticateUser(@RequestBody Customer customer) {
         return gatewayService.authenticateUser(customer);
+    }
+
+    // Review service route
+    @GetMapping("/review")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Review> getListOfReviews() {
+        return gatewayService.findAllReviews();
+    }
+
+    @GetMapping("/review/product/{productId}")
+    public double getAvgReviewByProductId(@PathVariable String productId) {
+        return gatewayService.getAvgReviewByProductId(productId);
+    }
+
+
+    @PostMapping("/review")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Review createNewReview(@RequestBody Review review) {
+        return gatewayService.createNewReview(review);
     }
 
 }

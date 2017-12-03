@@ -2,6 +2,7 @@ package cmpe282.microservice.gateway.services;
 
 import cmpe282.microservice.gateway.domain.Customer;
 import cmpe282.microservice.gateway.domain.Product;
+import cmpe282.microservice.gateway.domain.Review;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
@@ -22,20 +23,14 @@ public class GatewayServiceImpl implements GatewayService {
     private String PRODUCT_URL;
     @Value("${rest.api.customer}")
     private String CUSTOMER_URL;
+    @Value("${rest.api.review}")
     private String REVIEW_URL;
 
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public List<Product> findAllProducts() {
-        log.info("Route to :" + PRODUCT_URL);
-        ParameterizedTypeReference<List<Product>> params =
-            new ParameterizedTypeReference<List<Product>>() {
-            };
-        ResponseEntity<List<Product>> response =
-            restTemplate.exchange(PRODUCT_URL, HttpMethod.GET, null, params);
-
-        return response.getBody();
+        return getListOfObject(PRODUCT_URL);
     }
 
     @Override
@@ -62,13 +57,7 @@ public class GatewayServiceImpl implements GatewayService {
 
     @Override
     public List<Customer> findAllCustomers() {
-        ParameterizedTypeReference<List<Customer>> params =
-            new ParameterizedTypeReference<List<Customer>>() {
-            };
-        ResponseEntity<List<Customer>> response =
-            restTemplate.exchange(CUSTOMER_URL, HttpMethod.GET, null, params);
-
-        return response.getBody();
+        return getListOfObject(CUSTOMER_URL);
     }
 
     @Override
@@ -84,7 +73,36 @@ public class GatewayServiceImpl implements GatewayService {
         return restTemplate.postForEntity(CUSTOMER_URL + "/auth", customer, HttpStatus.class);
     }
 
+    @Override
+    public List<Review> findAllReviews() {
+        return getListOfObject(REVIEW_URL);
+    }
+
+    @Override
+    public double getAvgReviewByProductId(String productId) {
+        UriComponentsBuilder uriBuilder = createRestUri(REVIEW_URL + "/product", productId);
+        log.info("Route to :" + uriBuilder.toUriString());
+        return restTemplate.getForObject(uriBuilder.toUriString(), double.class);
+    }
+
+    @Override
+    public Review createNewReview(Review review) {
+        log.info("Route to :" + REVIEW_URL);
+        return restTemplate.postForObject(REVIEW_URL, review, Review.class);
+    }
+
     private UriComponentsBuilder createRestUri(String apiUri, String value) {
         return UriComponentsBuilder.fromUriString(apiUri).pathSegment(value);
+    }
+
+    private <T> List<T> getListOfObject(String uri) {
+        log.info("Route to :" + uri);
+        ParameterizedTypeReference<List<T>> params =
+            new ParameterizedTypeReference<List<T>>() {
+            };
+        ResponseEntity<List<T>> response =
+            restTemplate.exchange(REVIEW_URL, HttpMethod.GET, null, params);
+
+        return response.getBody();
     }
 }
