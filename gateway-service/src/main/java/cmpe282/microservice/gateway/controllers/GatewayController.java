@@ -29,13 +29,13 @@ public class GatewayController {
     }
 
     // Product service route
-    @GetMapping({"/product"})
+    @GetMapping("/product")
     @ResponseStatus(HttpStatus.OK)
     public List<Product> getListOfProducts() {
         return gatewayService.findAllProducts();
     }
 
-    @GetMapping({"/product/{id}"})
+    @GetMapping("/product/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Product getProductById(@PathVariable String id) {
         return gatewayService.getProductById(id);

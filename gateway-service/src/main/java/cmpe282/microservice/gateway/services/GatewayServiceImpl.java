@@ -101,7 +101,7 @@ public class GatewayServiceImpl implements GatewayService {
             new ParameterizedTypeReference<List<T>>() {
             };
         ResponseEntity<List<T>> response =
-            restTemplate.exchange(REVIEW_URL, HttpMethod.GET, null, params);
+            restTemplate.exchange(uri, HttpMethod.GET, null, params);
 
         return response.getBody();
     }
