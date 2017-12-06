@@ -61,7 +61,7 @@ public class GatewayController {
     }
 
     @PostMapping("/customer/auth")
-    public ResponseEntity<HttpStatus> authenticateUser(@RequestBody Customer customer) {
+    public boolean authenticateUser(@RequestBody Customer customer) {
         return gatewayService.authenticateUser(customer);
     }
 

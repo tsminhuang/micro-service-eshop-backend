@@ -37,11 +37,7 @@ public class CustomerController {
     }
 
     @PostMapping({"/auth"})
-    public ResponseEntity<HttpStatus> authenticateUser(@RequestBody Customer customer) {
-        if (customerService.authenticateCustomer(customer)) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-
-        return new ResponseEntity<HttpStatus>(HttpStatus.UNAUTHORIZED);
+    public boolean authenticateUser(@RequestBody Customer customer) {
+        return customerService.authenticateCustomer(customer);
     }
 }

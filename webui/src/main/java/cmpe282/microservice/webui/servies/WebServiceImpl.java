@@ -1,8 +1,8 @@
-package cmpe282.microservice.gateway.services;
+package cmpe282.microservice.webui.servies;
 
-import cmpe282.microservice.gateway.domain.Customer;
-import cmpe282.microservice.gateway.domain.Product;
-import cmpe282.microservice.gateway.domain.Review;
+import cmpe282.microservice.webui.domain.Customer;
+import cmpe282.microservice.webui.domain.Product;
+import cmpe282.microservice.webui.domain.Review;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
@@ -17,25 +17,21 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Slf4j
 @Service
-public class GatewayServiceImpl implements GatewayService {
+public class WebServiceImpl implements WebService {
 
-    @Value("${rest.api.product}")
-    private String PRODUCT_URL;
-    @Value("${rest.api.customer}")
-    private String CUSTOMER_URL;
-    @Value("${rest.api.review}")
-    private String REVIEW_URL;
+    @Value("${gateway.url}")
+    private String GATEWAY_URL;
 
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
     public List<Product> findAllProducts() {
-        return getListOfObject(PRODUCT_URL);
+        return getListOfObject(GATEWAY_URL + "/product");
     }
 
     @Override
     public Product getProductById(String id) {
-        UriComponentsBuilder uriBuilder = createRestUri(PRODUCT_URL, id);
+        UriComponentsBuilder uriBuilder = createRestUri(GATEWAY_URL + "/product", id);
         log.info("Route to :" + uriBuilder.toUriString());
 
         return restTemplate.getForObject(uriBuilder.toUriString(), Product.class);
@@ -43,7 +39,7 @@ public class GatewayServiceImpl implements GatewayService {
 
     @Override
     public Set<Product> getProductByKeyword(String keyword) {
-        UriComponentsBuilder uriBuilder = createRestUri(PRODUCT_URL + "/search", keyword);
+        UriComponentsBuilder uriBuilder = createRestUri(GATEWAY_URL + "/product/search", keyword);
         log.info("Route to :" + uriBuilder.toUriString());
 
         ParameterizedTypeReference<Set<Product>> params =
@@ -56,39 +52,25 @@ public class GatewayServiceImpl implements GatewayService {
     }
 
     @Override
-    public List<Customer> findAllCustomers() {
-        return getListOfObject(CUSTOMER_URL);
-    }
-
-    @Override
     public Customer createNewCustomer(Customer customer) {
-        log.info("Route to :" + CUSTOMER_URL);
-        return restTemplate.postForObject(CUSTOMER_URL, customer, Customer.class);
+        return null;
     }
 
     @Override
     public boolean authenticateUser(Customer customer) {
-        log.info("Route to :" + CUSTOMER_URL + "/auth");
+        log.info("Route to :" + GATEWAY_URL + "/customer" + "/auth");
 
-        return restTemplate.postForObject(CUSTOMER_URL + "/auth", customer, boolean.class);
-    }
-
-    @Override
-    public List<Review> findAllReviews() {
-        return getListOfObject(REVIEW_URL);
+        return restTemplate.postForObject( GATEWAY_URL + "/customer" + "/auth", customer, boolean.class);
     }
 
     @Override
     public double getAvgReviewByProductId(String productId) {
-        UriComponentsBuilder uriBuilder = createRestUri(REVIEW_URL + "/product", productId);
-        log.info("Route to :" + uriBuilder.toUriString());
-        return restTemplate.getForObject(uriBuilder.toUriString(), double.class);
+        return 0;
     }
 
     @Override
     public Review createNewReview(Review review) {
-        log.info("Route to :" + REVIEW_URL);
-        return restTemplate.postForObject(REVIEW_URL, review, Review.class);
+        return null;
     }
 
     private UriComponentsBuilder createRestUri(String apiUri, String value) {
