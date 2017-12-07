@@ -65,7 +65,9 @@ public class WebServiceImpl implements WebService {
 
     @Override
     public double getAvgReviewByProductId(String productId) {
-        return 0;
+        UriComponentsBuilder uriBuilder = createRestUri(GATEWAY_URL + "/review/product", productId);
+        log.info("Route to :" + uriBuilder.toUriString());
+        return restTemplate.getForObject(uriBuilder.toUriString(), double.class);
     }
 
     @Override
