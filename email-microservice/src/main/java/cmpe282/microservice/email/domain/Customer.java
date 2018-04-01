@@ -1,0 +1,15 @@
+package cmpe282.microservice.email.domain;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Customer {
+
+    String id;
+    String email;
+    String password;
+}

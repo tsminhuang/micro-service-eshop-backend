@@ -42,7 +42,8 @@ public class ReviewBootstrap implements ApplicationListener<ContextRefreshedEven
         final List<Review> reviews = new ArrayList<>(numReview);
         final Random random = new Random();
         for (int i = 0; i < numReview; i++) {
-            reviews.add(new Review(productId, UUID.randomUUID().toString(), (double) random.nextInt(5)));
+            reviews.add(
+                new Review(productId, UUID.randomUUID().toString(), (double) random.nextInt(5)));
         }
 
         return reviews;

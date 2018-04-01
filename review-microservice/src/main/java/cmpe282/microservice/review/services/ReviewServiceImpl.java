@@ -15,7 +15,12 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public double getProductAvgRatingByProductId(String productId) {
+    public List<Review> findAllReviews() {
+        return reviewRepository.findAll();
+    }
+
+    @Override
+    public double getAvgReviewByProductId(String productId) {
         List<Review> reviews = reviewRepository.findByProductId(productId);
 
         return reviews.stream().mapToDouble(Review::getRating).average().orElse(0.0);
